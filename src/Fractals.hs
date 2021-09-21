@@ -1,11 +1,10 @@
 {-# LANGUAGE RankNTypes #-}
-module Mandelbrot where
+module Fractals (  iterateFractal, mandelbrot, burningShip, tricorn ) where
 
 import Data.Complex
 
 
 type Formula a = (Fractional a, RealFloat a) => Complex a -> Complex a -> Complex a -- e.g z' = z^2 + c where z, c, z' are Complex
-
 
 maxIter = 100
 
@@ -15,19 +14,20 @@ mandelbrot z c = z ^ 2 + c
 
 
 burningShip :: Formula a
-burningShip z = mandelbrot (abs (realPart z) :+ abs (imagPart z))
+burningShip z c = (abs (realPart z) :+ abs (imagPart z)) ^ 2 + c
 
 
 tricorn :: Formula a
-tricorn z = mandelbrot $ conjugate z
+tricorn z c = conjugate z ^ 2 + c
 
 
-fractal :: (Fractional a, RealFloat a) => Formula a -> Complex a ->  Int
-fractal f c = iterateFractal f (0 :+ 0) c 0
+-- i think julia sets can be just our regular sets (mandelbrot for the classic ones) given a const c. maybe in a curried form. TODO 
+
+-- julia :: Formula a
+-- julia z _ = z ^ 2 + ((-0.835) :+ (-0.2321))
 
 
 -- returns intensity in correspondence to a point on the complex plane
--- for mandelbrot, tricorn, burning ship we can just pass in the formula. julia sets are a bit trickier. TODO
 iterateFractal :: (Fractional a, RealFloat a) => Formula a -> Complex a -> Complex a -> Int -> Int
 iterateFractal formula z c iter
   | iter > maxIter = 0
