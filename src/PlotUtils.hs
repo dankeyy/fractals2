@@ -2,7 +2,7 @@ module PlotUtils where
 
 import Data.Complex ( Complex((:+)) )
 import Graphics.GD ( newImage, rgb, savePngFile, setPixel, Color, Point, Size )
-import Fractals ( iterateFractal, Formula ) 
+import Fractals ( iteratingFractal, Formula ) 
 
 type ViewPoint = (Float, Float) -- note that while gd's Point will refer to pixel points, ViewPoint will refer to points in the view port, on the complex plane
 type ViewPort = (ViewPoint, ViewPoint) -- the exact window frame on the complex plane we want to observe
@@ -18,8 +18,8 @@ colorBy :: Int -> Color
 colorBy x = rgb (x^2) (2*x) 40 -- idk
 
 
-drawBy :: ViewPoint -> Formula -> Color
-drawBy (vx, vy) f = colorBy $ iterateFractal f (0 :+ 0) (vx :+ vy) 0
+toColor :: ViewPoint -> Formula -> Color
+toColor (vx, vy) f = colorBy $ iteratingFractal f (0 :+ 0) (vx :+ vy) 0
 
 
 -- pointing from the outside world to a specific point on the complex plane outputing its x,y as a ViewPoint
@@ -37,10 +37,13 @@ pixelToViewPoint (pixX, pixY) (width, height) ((minXvp, minYvp), (maxXvp, maxYvp
 plot :: ViewPort -> Size -> Formula -> String -> IO ()
 plot viewPort size formula fileName = do
   img <- newImage size
-  mapM_ (\point -> let 
-                     viewPoint = pixelToViewPoint point size viewPort
-                     color = drawBy viewPoint formula
-                   in 
-                     setPixel point color img) 
-        grid
+
+  mapM_ (\point -> 
+          let 
+            viewPoint = pixelToViewPoint point size viewPort
+            color = toColor viewPoint formula
+          in 
+            setPixel point color img
+        ) grid
+
   savePngFile fileName img

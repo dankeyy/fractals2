@@ -1,4 +1,4 @@
-module Fractals (  iterateFractal, mandelbrot, burningShip, tricorn, Formula ) where
+module Fractals (  iteratingFractal, mandelbrot, burningShip, tricorn, Formula ) where
 
 import Data.Complex
 
@@ -28,9 +28,9 @@ tricorn z c = conjugate z ^ 2 + c
 
 
 -- returns intensity in correspondence to a point on the complex plane
-iterateFractal :: Formula -> Complex Float -> Complex Float -> Int -> Int
-iterateFractal formula z c iter
+iteratingFractal :: Formula -> Complex Float -> Complex Float -> Int -> Int
+iteratingFractal formula z c iter
   | iter > maxIter = 0
   | otherwise = let z' = formula z c in
       if magnitude z' > 2 then iter 
-      else iterateFractal formula z' c iter + 1
+      else iteratingFractal formula z' c iter + 1
