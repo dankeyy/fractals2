@@ -33,4 +33,4 @@ iteratingFractal formula z c iter
   | iter > maxIter = 0
   | otherwise = let z' = formula z c in
       if magnitude z' > 2 then iter 
-      else iteratingFractal formula z' c iter + 1
+      else iteratingFractal formula z' c (iter + 1)
