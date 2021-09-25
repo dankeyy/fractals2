@@ -1,4 +1,4 @@
-module Fractals (  iteratingFractal, mandelbrot, burningShip, tricorn, Formula ) where
+module Fractals (  iteratingFractal, mandelbrot, burningShip, tricorn, julia, Formula ) where
 
 import Data.Complex
 
@@ -21,10 +21,10 @@ tricorn :: Formula
 tricorn z c = conjugate z ^ 2 + c
 
 
--- i think julia sets can be just our regular sets (mandelbrot for the classic ones) given a const c. maybe in a curried form. TODO 
-
--- julia :: Formula
--- julia z _ = z ^ 2 + ((-0.835) :+ (-0.2321))
+-- i think julia sets can be just our regular sets (mandelbrot for the classic ones) given a const c in reversed c z paremeter order.
+-- for now let it be just a regular formula. for which we just reverse z and c
+julia :: Formula
+julia z _ = z ^ 2 + ((-0.835) :+ (-0.2321))
 
 
 -- returns intensity in correspondence to a point on the complex plane
