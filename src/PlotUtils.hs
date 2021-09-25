@@ -7,7 +7,7 @@ import Fractals ( iteratingFractal, Formula )
 type ViewPoint = (Float, Float) -- note that while gd's Point will refer to pixel points, ViewPoint will refer to points in the view port, on the complex plane
 type ViewPort = (ViewPoint, ViewPoint) -- the exact window frame on the complex plane we want to observe
 
-size@(width, height) = (600, 400) :: Size
+size@(width, height) = (1000, 1000) :: Size
 
 
 grid :: [(Int, Int)]
@@ -15,7 +15,7 @@ grid = [(x, y) | x <- [0 .. width - 1], y <- [0 .. height - 1]]
 
 
 colorBy :: Int -> Color
-colorBy x = rgb (x^2) (2*x) 40 -- idk
+colorBy x = rgb (x*7+ 20) (x*6+20) x -- change by color ratio wanted
 
 
 toColor :: ViewPoint -> Formula -> Color
