@@ -4,15 +4,14 @@ import Data.Complex ( Complex((:+)) )
 import Graphics.GD ( newImage, rgb, savePngFile, setPixel, Color, Point, Size )
 import Fractals ( iteratingFractal, Formula , flipForJulia) 
 
+
 type ViewPoint = (Float, Float) -- note that while gd's Point will refer to pixel points, ViewPoint will refer to points in the view port, on the complex plane
 type ViewPort = (ViewPoint, ViewPoint) -- the exact window frame on the complex plane we want to observe
 type JuliaMode = Bool
 
-size@(width, height) = (1200, 1000) :: Size
 
-
-grid :: [(Int, Int)]
-grid = [(x, y) | x <- [0 .. width - 1], y <- [0 .. height - 1]]
+gridBy :: Size -> [(Int, Int)]
+gridBy (width, height) = [(x, y) | x <- [0 .. width - 1], y <- [0 .. height - 1]]
 
 
 colorBy :: Int -> Color
@@ -46,6 +45,6 @@ plot viewPort size formula juliaMode fileName = do
             color = toColor viewPoint formula juliaMode
           in 
             setPixel point color img
-        ) grid
+        ) (gridBy size)
 
   savePngFile fileName img

@@ -1,13 +1,14 @@
 module Fractals (  iteratingFractal, mandelbrot, burningShip, tricorn, julia, flipForJulia, Formula, Parameters ) where
 
-import Data.Complex
-import Data.Bool
-import Data.Tuple
+import Data.Complex ( Complex(..), conjugate, imagPart, magnitude, realPart )
+import Data.Bool ( bool )
+import Data.Tuple ( swap )
 
 
--- type Formula a = (Fractional a, RealFloat a) => Complex a -> Complex a -> Complex a -- e.g z' = z^2 + c where z, c, z' are Complex
-type Formula = Complex Float -> Complex Float -> Complex Float -- e.g z' = z^2 + c where z, c, z' are Complex
-type Parameters = (Complex Float, Complex Float)
+type Formula = Complex Float -> Complex Float -> Complex Float -- e.g z' = z^2 + c
+type Parameters = (Complex Float, Complex Float) -- (z,c)
+
+
 maxIter = 100
 
 flipForJulia :: Parameters -> Bool -> Parameters
