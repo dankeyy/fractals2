@@ -43,7 +43,7 @@ executable fractals2-exe
       Paths_fractals2
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -fllvm -O2
   build-depends:
       base >=4.7 && <5
     , fractals2
