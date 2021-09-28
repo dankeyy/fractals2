@@ -5,5 +5,6 @@ module Lib
 import PlotUtils
 import Fractals
 
+
 someFunc :: IO ()
-someFunc =  plot ( (-2.0, 2.0), (2.0, -2.0) ) size tricorn "f.png"
+someFunc =  plot ( (-1.9,1.1), (1.9,-1.1) ) size julia True "f.png"
